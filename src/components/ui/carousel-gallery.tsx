@@ -52,7 +52,7 @@ export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 50
     return (
         <div className="w-full p-4 md:p-6">
             <div className="relative overflow-hidden rounded-lg">
-                <div className="relative aspect-video w-full overflow-hidden">
+                <div className="relative aspect-video w-full overflow-hidden max-h-[60vh]" >
                     {images.map((image, index) => (
                         <div
                             key={`slide-${index}`}
