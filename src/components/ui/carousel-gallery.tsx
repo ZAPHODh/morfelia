@@ -50,14 +50,14 @@ export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 50
     }, []);
 
     return (
-        <div className="w-full p-4 md:p-6">
-            <div className="relative overflow-hidden rounded-lg">
-                <div className="relative aspect-video w-full overflow-hidden max-h-[60vh]" >
+        <div className="w-screen md:p-6">
+            <div className="relative w-screen bg-black overflow-hidden">
+                <div className="relative aspect-video w-screen overflow-hidden max-h-[60vh]" >
                     {images.map((image, index) => (
                         <div
                             key={`slide-${index}`}
                             className={cn(
-                                "absolute inset-0 transform transition-all duration-500 ease-in-out",
+                                "w-screen absolute inset-0 transform transition-all duration-500 ease-in-out",
                                 index === currentIndex
                                     ? "translate-x-0 opacity-100"
                                     : index < currentIndex
@@ -70,7 +70,7 @@ export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 50
                                 alt={image.alt}
                                 width={image.width}
                                 height={image.height}
-                                className="h-full w-full object-cover"
+                                className="h-screen w-full object-cover"
                             />
                         </div>
                     ))}

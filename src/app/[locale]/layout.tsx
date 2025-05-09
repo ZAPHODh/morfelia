@@ -3,6 +3,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import HeaderNav from '@/components/header-nav';
+import { CartProvider } from '@/hooks/use-cart';
 
 export default async function LocaleLayout({
   children,
@@ -18,10 +19,12 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className='flex flex-col w-full items-center justify-center'>
+      <body className='flex flex-col w-screen overflow-x-hidden items-center justify-center m-0 p-0'>
         <NextIntlClientProvider>
-          <HeaderNav />
-          {children}
+          <CartProvider>
+            <HeaderNav />
+            {children}
+          </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

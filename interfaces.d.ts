@@ -1,4 +1,4 @@
-type Category = 'categoria1' | 'categoria2' | 'sazonal'
+type Category = 'categoria1' | 'categoria2' | 'sazonal';
 
 interface GalleryImage {
     src: string;
@@ -8,41 +8,45 @@ interface GalleryImage {
 }
 
 type Product = {
-    id: string
-    name: string
-    images: string[]
-    metadata: Metadata
-    price: number
-    category: Category
-    promoCode?: PromoCode[]
-}
+    id: string;
+    slug: string;
+    name: Record<string, string>;
+    images: GalleryImage[];
+    metadata: Metadata;
+    price: Record<string, Price>;
+    category: Category;
+    promoCode?: PromoCode[];
+    description: string
+    shortDescription: string
+};
+
+type Price = {
+    value: number;
+    currency: string;
+};
 
 type Metadata = {
-    icons: Icons
-    title: Title
-    description: string
-    openGraph: OpenGraph
-}
+    icons: Icons;
+    title: Record<string, string>;
+    description: Record<string, string>;
+    openGraph: OpenGraph;
+};
 
 type Icons = {
-    url: string,
-    type: string,
-    sizes: string
-}
-
-type Title = {
-    default: string,
-    template: string
-}
+    url: string;
+    type: string;
+    sizes: string;
+};
 
 type OpenGraph = {
-    title: string,
-    description: string,
-}
+    title: Record<string, string>;
+    description: Record<string, string>;
+    image?: string;
+};
 
 type PromoCode = {
-    id: string
-    productId: string
-    validate: Date
-    code: string
-}
+    id: string;
+    productId: string;
+    validate: Date | string;
+    code: string;
+};

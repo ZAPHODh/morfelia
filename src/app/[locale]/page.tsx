@@ -1,7 +1,9 @@
 'use client';
 
+import { Card } from '@/components/ui/product-card';
 import CarouselGallery from '@/components/ui/carousel-gallery';
 import { CategoryMenu } from '@/components/ui/category-menu';
+import { mockProduct } from '../../../mocks/product';
 const images: GalleryImage[] = [
   {
     src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1470&auto=format&fit=crop",
@@ -36,9 +38,10 @@ const images: GalleryImage[] = [
 ];
 export default function HomePage() {
   return (
-    <div className='w-screen'>
+    <div className='w-full flex flex-col items-center justify-center'>
       <CarouselGallery autoPlay={true} autoPlayInterval={5000} showThumbnails={false} images={images} />
       <CategoryMenu />
+      <Card product={mockProduct} />
     </div>
   );
 }

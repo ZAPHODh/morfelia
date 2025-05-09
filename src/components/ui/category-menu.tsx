@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { CategoryCard } from "./category-card"
+import { Card } from "./card"
 
 const categories = [
     {
@@ -14,7 +14,7 @@ const categories = [
         id: "colares",
         title: "Colares",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/produtos/colares",
+        href: "/colares",
     },
     {
         id: "aneis",
@@ -37,24 +37,16 @@ const categories = [
 ]
 
 export function CategoryMenu() {
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-            },
-        },
-    }
+
 
     return (
-        <motion.div className="py-12 px-4 sm:px-6 lg:px-8" variants={container} initial="hidden" animate="show">
+        <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12">Nossas Categorias</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                 {categories.map((category) => (
                     <CategoryCard key={category.id} title={category.title} imageSrc={category.imageSrc} href={category.href} />
                 ))}
             </div>
-        </motion.div>
+        </div>
     )
 }
