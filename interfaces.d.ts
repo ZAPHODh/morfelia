@@ -1,5 +1,17 @@
 type Category = 'categoria1' | 'categoria2' | 'sazonal';
 
+type ProductComment = {
+    id: string
+    userId: string
+    content: string
+    stars: number
+}
+
+type Price = {
+    value: number;
+    currency: string;
+};
+
 interface GalleryImage {
     src: string;
     alt: string;
@@ -7,23 +19,6 @@ interface GalleryImage {
     height: number;
 }
 
-type Product = {
-    id: string;
-    slug: string;
-    name: Record<string, string>;
-    images: GalleryImage[];
-    metadata: Metadata;
-    price: Record<string, Price>;
-    category: Category;
-    promoCode?: PromoCode[];
-    description: string
-    shortDescription: string
-};
-
-type Price = {
-    value: number;
-    currency: string;
-};
 
 type Metadata = {
     icons: Icons;
@@ -50,3 +45,22 @@ type PromoCode = {
     validate: Date | string;
     code: string;
 };
+
+type Product = {
+    id: string;
+    slug: string;
+    name: Record<string, string>;
+    images: GalleryImage[];
+    metadata: Metadata;
+    price: Record<string, Price>;
+    category: Category;
+    promoCode?: PromoCode[];
+    description: string
+    shortDescription: string
+    comments?: ProductComment[]
+    sizes?: string[]
+    materials?: { [key: string]: string }
+};
+
+
+

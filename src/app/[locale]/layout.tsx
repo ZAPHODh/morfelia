@@ -19,7 +19,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className='flex flex-col w-screen overflow-x-hidden items-center justify-center m-0 p-0'>
+      <body >
         <NextIntlClientProvider>
           <CartProvider>
             <HeaderNav />
