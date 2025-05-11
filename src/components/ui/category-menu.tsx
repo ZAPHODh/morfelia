@@ -1,7 +1,6 @@
 "use client"
 
 import { CategoryCard } from "./category-card"
-import { Card } from "./card"
 
 const categories = [
     {

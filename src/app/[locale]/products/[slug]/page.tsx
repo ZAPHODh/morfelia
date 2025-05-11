@@ -20,6 +20,7 @@ import { products } from "../../../../../mocks/product"
 
 
 async function getProduct(slug: string): Promise<Product | null> {
+    console.log(slug)
     // try {
     //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/products/${slug}`, {
     //         next: { revalidate: 3600 }, 
@@ -38,8 +39,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 }
 
 async function getSuggestedProducts(category: Category): Promise<Product[]> {
-    // Simulate API call for suggested products
-    // In a real implementation, you would fetch from your API
+    console.log(category)
     return [products[0], products[1]]
 }
 
@@ -52,8 +52,6 @@ export async function generateMetadata(props: { params: Promise<{ slug: string, 
             description: "The requested product could not be found",
         }
     }
-
-    // Use the product's metadata
     return {
         title: product.metadata.title["en"] || product.name["en"],
         description: product.metadata.description["en"],
@@ -68,8 +66,8 @@ export async function generateMetadata(props: { params: Promise<{ slug: string, 
     }
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-    const product = await getProduct(params.slug)
+export default async function ProductPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
+    const product = await getProduct((await params).slug)
 
     if (!product) {
         notFound()
@@ -78,15 +76,12 @@ export default async function ProductPage({ params }: { params: { slug: string }
     const suggestedProducts = await getSuggestedProducts(product.category)
     const language = "en"
 
-    // Format price with currency
     const formatPrice = (price: Price) => {
         return new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: price.currency,
         }).format(price.value)
     }
-
-    // Calculate average rating
     const averageRating =
         product.comments && product.comments.length > 0
             ? product.comments.reduce((acc, comment) => acc + comment.stars, 0) / product.comments.length
@@ -109,11 +104,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
     return (
         <main className="container mx-auto px-4 py-8">
-            {/* Breadcrumbs */}
             <Breadcrumbs items={breadcrumbItems} />
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Product Gallery */}
                 <div>
                     {product.images && product.images.length > 0 ? (
                         <ImageGallery images={product.images} productName={product.name[language]} />
@@ -133,8 +125,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
                         </Card>
                     )}
                 </div>
-
-                {/* Product Details Card */}
                 <div className="space-y-6">
                     <Card className="overflow-hidden border-none">
                         <CardContent className="p-6 space-y-6">
@@ -160,8 +150,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
                             <p className="text-lg font-semibold">{formatPrice(product.price[language])}</p>
 
                             <p className="text-muted-foreground">{product.shortDescription}</p>
-
-                            {/* Size Selector */}
                             {product.sizes && product.sizes.length > 0 && (
                                 <div className="space-y-2">
                                     <label htmlFor="size-select" className="block text-sm font-medium">
@@ -170,8 +158,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
                                     <SizeSelector sizes={product.sizes} />
                                 </div>
                             )}
-
-                            {/* Share Buttons */}
                             <div className="pt-2">
                                 <ShareButtons
                                     url={`/product/${product.slug}`}
@@ -180,8 +166,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
                                     image={product.images[0]?.src}
                                 />
                             </div>
-
-                            {/* Action Buttons */}
                             <div className="pt-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <Button className="w-full" size="lg">
@@ -289,7 +273,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
                                     key={product.id}
                                     className="overflow-hidden border-none shadow-md hover:shadow-lg transition-shadow"
                                 >
-                                    <Link href={`/product/${product.slug}`} className="group">
+                                    <Link href={`/products/${product.slug}`} className="group">
                                         <div className="relative aspect-square overflow-hidden">
                                             <Image
                                                 src={product.images[0]?.src || "/placeholder.svg?height=300&width=300"}

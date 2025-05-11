@@ -57,7 +57,7 @@ export function ReviewForm({ productId }: ReviewFormProps) {
                 "Review submitted", {
                 description: "Thank you for your feedback!",
             })
-        } catch (error) {
+        } catch {
             toast("Error", {
                 description: "There was a problem submitting your review. Please try again.",
             })

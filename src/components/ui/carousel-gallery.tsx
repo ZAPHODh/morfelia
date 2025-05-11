@@ -33,9 +33,8 @@ export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 50
         }, autoPlayInterval);
 
         return () => clearInterval(interval);
-    }, [currentIndex, autoPlay, autoPlayInterval]);
+    }, [currentIndex, autoPlay, autoPlayInterval, nextSlide]);
 
-    // Keyboard navigation for main carousel
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "ArrowRight") {

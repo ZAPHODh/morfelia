@@ -17,8 +17,6 @@ export function ShareButtons({ url, title, description, image }: ShareButtonsPro
     const [isMounted, setIsMounted] = useState(false)
     const [fullUrl, setFullUrl] = useState(url)
     const [canShare, setCanShare] = useState(false)
-
-    // Wait for component to mount before accessing browser APIs
     useEffect(() => {
         setIsMounted(true)
         setFullUrl(url.startsWith("http") ? url : `${window.location.origin}${url}`)
@@ -55,12 +53,9 @@ export function ShareButtons({ url, title, description, image }: ShareButtonsPro
         }
     }
 
-    // Generate share URLs only after component is mounted
     const facebookShareUrl = isMounted ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}` : '#'
     const twitterShareUrl = isMounted ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullUrl)}&text=${encodeURIComponent(title)}` : '#'
     const pinterestShareUrl = isMounted ? `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(fullUrl)}&description=${encodeURIComponent(title)}&media=${encodeURIComponent(image || "")}` : '#'
-    const whatsappShareUrl = isMounted ? `https://wa.me/?text=${encodeURIComponent(`${title} ${fullUrl}`)}` : '#'
-
     return (
         <div className="flex items-center space-x-2">
             <span className="text-sm text-muted-foreground mr-1">Share:</span>
@@ -81,7 +76,6 @@ export function ShareButtons({ url, title, description, image }: ShareButtonsPro
                         <p>Share on Facebook</p>
                     </TooltipContent>
                 </Tooltip>
-                {/* Other social buttons remain the same */}
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
