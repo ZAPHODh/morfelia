@@ -38,8 +38,6 @@ export function Card(props: { product: Product }) {
     };
 
 
-
-
     const overlayVariants = {
         rest: {
             background: isMobile
@@ -53,14 +51,13 @@ export function Card(props: { product: Product }) {
 
 
     const textVariants = {
-        rest: { y: isMobile ? 0 : 110 }, // Texto já visível em mobile
+        rest: { y: isMobile ? 0 : 110 },
         hover: { y: 0 }
     };
 
-    // Animação do conteúdo secundário
     const contentVariants = {
         rest: {
-            opacity: isMobile ? 1 : 0, // Conteúdo já visível em mobile
+            opacity: isMobile ? 1 : 0,
             y: isMobile ? 0 : 50
         },
         hover: {
@@ -69,11 +66,10 @@ export function Card(props: { product: Product }) {
         }
     };
 
-    // Configurações da sombra externa
     const shadowVariants = {
         rest: {
             boxShadow: isMobile
-                ? '0 0 12px 1px rgba(34, 197, 94, 0.15)' // Sombra mais suave
+                ? '0 0 12px 1px rgba(34, 197, 94, 0.15)'
                 : '0 0 0 0 rgba(34, 197, 94, 0)'
         },
         hover: {
@@ -89,7 +85,6 @@ export function Card(props: { product: Product }) {
             animate={isMobile ? "hover" : "rest"}
             variants={containerVariants}
         >
-            {/* Botão de Favoritos com animação condicional */}
             <motion.div
                 className="absolute top-4 right-4 z-20"
                 variants={{
@@ -104,18 +99,16 @@ export function Card(props: { product: Product }) {
                 <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full bg-black/50 hover:bg-black/80"
+                    className="rounded-full"
                     onClick={() => setIsWishlisted(!isWishlisted)}
                 >
                     <Heart
-                        className="h-4 w-4 text-white"
+                        className="h-4 w-4"
                         fill={isWishlisted ? 'currentColor' : 'none'}
                         stroke={isWishlisted ? 'currentColor' : 'white'}
                     />
                 </Button>
             </motion.div>
-
-            {/* Container da imagem principal */}
             <motion.div
                 className="absolute h-full"
                 variants={imageVariants}
@@ -130,8 +123,6 @@ export function Card(props: { product: Product }) {
                     priority={isMobile}
                 />
             </motion.div>
-
-            {/* Overlay de conteúdo interativo */}
             <motion.div
                 className="absolute inset-0 flex flex-col justify-end p-6 overflow-hidden"
                 variants={overlayVariants}
@@ -167,7 +158,7 @@ export function Card(props: { product: Product }) {
                             <Button
                                 onClick={() => push(`products/${props.product.slug}`)}
                                 variant={'outline'}
-                                className="w-full hover:bg-gray-300 hover:cursor-pointer"
+                                className="w-full hover:cursor-pointer"
                                 style={{ zIndex: 1000 }}
                             >
                                 Buy
@@ -175,7 +166,7 @@ export function Card(props: { product: Product }) {
                             <Button
                                 onClick={() => addToCart(props.product)}
                                 variant={'outline'}
-                                className="hover:bg-gray-300 hover:cursor-pointer"
+                                className="hover:cursor-pointer"
                                 style={{ zIndex: 1000 }}
                             >
                                 <ShoppingCart />
@@ -184,8 +175,6 @@ export function Card(props: { product: Product }) {
                     </motion.div>
                 </motion.div>
             </motion.div>
-
-            {/* Efeito de sombra externa */}
             <motion.div
                 className="absolute inset-0 rounded-xl"
                 variants={shadowVariants}
