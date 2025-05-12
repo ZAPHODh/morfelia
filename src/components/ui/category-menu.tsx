@@ -7,31 +7,31 @@ const categories = [
         id: "brincos",
         title: "Brincos",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/produtos/brincos",
+        href: "/categories/brincos",
     },
     {
         id: "colares",
         title: "Colares",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/colares",
+        href: "categories/colares",
     },
     {
         id: "aneis",
         title: "Anéis",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/produtos/aneis",
+        href: "/categories/aneis",
     },
     {
         id: "pulseiras",
         title: "Pulseiras",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/produtos/pulseiras",
+        href: "/categories/pulseiras",
     },
     {
         id: "masculino",
         title: "Masculino",
         imageSrc: "/placeholder.svg?height=400&width=300",
-        href: "/produtos/masculino",
+        href: "/categories/masculino",
     },
 ]
 

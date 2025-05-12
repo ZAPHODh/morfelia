@@ -16,13 +16,14 @@ type CarouselGalleryProps = {
 export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 5000, showThumbnails = true, images }: CarouselGalleryProps) {
     const [currentIndex, setCurrentIndex] = React.useState(0);
 
-    const prevSlide = () => {
+    const prevSlide = React.useCallback(() => {
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    };
+    }, [images.length]);
 
-    const nextSlide = () => {
+    const nextSlide = React.useCallback(() => {
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    };
+    }, [images.length]);
+
 
 
     React.useEffect(() => {
@@ -46,7 +47,7 @@ export default function CarouselGallery({ autoPlay = true, autoPlayInterval = 50
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, []);
+    }, [nextSlide, prevSlide]);
 
     return (
         <div className="w-screen md:p-6">

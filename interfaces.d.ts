@@ -60,6 +60,7 @@ type Product = {
     comments?: ProductComment[]
     sizes?: string[]
     materials?: { [key: string]: string }
+    weight?: number
 };
 
 

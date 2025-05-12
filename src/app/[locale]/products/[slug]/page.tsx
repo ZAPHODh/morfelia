@@ -15,6 +15,7 @@ import { ImageGallery } from "@/components/ui/image-gallery"
 import { SizeSelector } from "@/components/ui/size-sellector"
 import { ShareButtons } from "@/components/share-button"
 import { products } from "../../../../../mocks/product"
+import { ShippingCalculator } from "@/components/shipping-calculator"
 
 
 
@@ -192,6 +193,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             </div>
                         </CardContent>
                     </Card>
+                    <ShippingCalculator productId={product.id} productWeight={product.weight || 100} />
                 </div>
             </div>
 
