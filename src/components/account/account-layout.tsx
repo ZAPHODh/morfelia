@@ -20,7 +20,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
     const pathname = usePathname()
     const isMobile = useIsMobile()
     const [isClient, setIsClient] = useState(false)
-
+    const [open, setOpen] = useState(false)
     useEffect(() => {
         setIsClient(true)
     }, [])
@@ -69,6 +69,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                 const isActive = pathname === item.href
                 return (
                     <Link
+                        onClick={() => setOpen(false)}
                         key={item.href}
                         href={item.href}
                         className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive ? "bg-gold-100 text-gold-900" : "text-muted-foreground hover:bg-gold-50 hover:text-gold-900"
@@ -98,7 +99,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                 {isMobile ? (
                     <div className="flex items-center justify-between border-b pb-4 mb-4">
                         <h1 className="text-2xl font-serif">My Account</h1>
-                        <Sheet>
+                        <Sheet open={open} onOpenChange={setOpen}>
                             <SheetTrigger asChild>
                                 <Button variant="outline" size="icon">
                                     <Menu className="h-5 w-5" />
