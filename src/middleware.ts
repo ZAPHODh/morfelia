@@ -6,7 +6,8 @@ import { decrypt } from './lib/auth/server-session';
 
 const intlMiddleware = createMiddleware(routing);
 
-const protectedRoutes = ['/dashboard', '/account'];
+// const protectedRoutes = ['/dashboard', '/account'];
+const protectedRoutes = ['/protected']
 const publicRoutes = ['/auth', '/'];
 
 export default async function middleware(req: NextRequest) {
