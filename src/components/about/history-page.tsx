@@ -152,7 +152,7 @@ export default function HistoryPage() {
                     </div>
                 </div>
             </section>
-            <section className="py-16 md:py-24 bg-secondary ">
+            <section className="py-16 md:py-24 bg-primary ">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="font-playfair text-3xl md:text-4xl mb-6">Be Part of Our Story</h2>
                     <p className="max-w-2xl mx-auto mb-8">
@@ -161,7 +161,7 @@ export default function HistoryPage() {
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link href="/shop">
-                            <Button >Explore Collections</Button>
+                            <Button variant={'ghost'} >Explore Collections</Button>
                         </Link>
                         <Link href="/contact">
                             <Button variant="outline">
