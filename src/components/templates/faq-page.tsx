@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { faqData } from "@/lib/faq-data"
 import { FaqSection } from "../faq"
 import { Link } from "@/i18n/navigation"
+import { Button } from "../ui/button"
 
 export default function FaqPage() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -61,18 +62,20 @@ export default function FaqPage() {
                     If you couldn&apos;t find the answer you were looking for, please contact our customer service team.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                    <Link
-                        href="/contact"
-                        className="inline-flex items-center justify-center rounded-md bg-gold-600 px-6 py-3 text-sm font-medium text-white shadow transition-colors hover:bg-gold-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-500"
-                    >
-                        Contact Us
-                    </Link>
-                    <Link
-                        href="tel:+1234567890"
-                        className="inline-flex items-center justify-center rounded-md border border-gold-200 bg-background px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold-500"
-                    >
-                        Call Us: (123) 456-7890
-                    </Link>
+                    <Button asChild>
+                        <Link
+                            href="/contact"
+                        >
+                            Contact Us
+                        </Link>
+                    </Button>
+                    <Button asChild variant={'outline'}>
+                        <Link
+                            href="tel:+1234567890"
+                        >
+                            Call Us: (123) 456-7890
+                        </Link>
+                    </Button>
                 </div>
             </div>
         </div>
