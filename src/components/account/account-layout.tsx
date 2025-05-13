@@ -106,7 +106,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                                     <span className="sr-only">Toggle menu</span>
                                 </Button>
                             </SheetTrigger>
-                            <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                                 <div className="px-2 py-6">
                                     <div className="mb-8 flex items-center justify-between">
                                         <h2 className="text-xl font-serif">My Account</h2>
