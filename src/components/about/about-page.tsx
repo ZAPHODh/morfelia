@@ -25,18 +25,18 @@ export default function AboutPage() {
             <section className="py-16 md:py-24 container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="font-playfair text-3xl md:text-4xl mb-6">Our Story</h2>
-                        <p className="text-gray-700 mb-4">
+                        <h2 className="font-playfair text-3xl md:text-4xl mb-6 text-center md:text-start">Our Story</h2>
+                        <p className=" mb-4">
                             Founded in 1985 by master jeweler Antonio Bertelli, Elegance Jewelry began as a small atelier in Milan,
                             Italy. What started as a passion project quickly gained recognition for its exceptional craftsmanship and
                             innovative designs.
                         </p>
-                        <p className="text-gray-700 mb-4">
+                        <p className=" mb-4">
                             Today, Elegance Jewelry stands as a symbol of luxury and sophistication, with boutiques in major cities
                             around the world. Our commitment to quality and artistry remains unchanged, as we continue to create
                             pieces that celebrate life&apos;s most precious moments.
                         </p>
-                        <p className="text-gray-700 mb-6">
+                        <p className=" mb-6">
                             Each Elegance creation tells a story—a story of tradition, innovation, and timeless beauty that transcends
                             generations.
                         </p>
@@ -60,7 +60,7 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
                         <h2 className="font-playfair text-3xl md:text-4xl mb-4">Our Values</h2>
-                        <p className="text-gray-700 max-w-2xl mx-auto">
+                        <p className="max-w-2xl mx-auto">
                             At Elegance Jewelry, our values guide everything we do, from sourcing the finest materials to crafting
                             each piece with meticulous attention to detail.
                         </p>
