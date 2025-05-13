@@ -41,11 +41,11 @@ export function Card(props: { product: Product }) {
     const overlayVariants = {
         rest: {
             background: isMobile
-                ? 'linear-gradient(0deg, rgba(0,0,0,0.85) 30%, transparent 100%)'
-                : 'linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%)'
+                ? 'linear-gradient(0deg, var(--color-primary-800) 15%, transparent 70%)'
+                : 'linear-gradient(0deg, var(--color-primary-800) 0%, transparent 70%)'
         },
         hover: {
-            background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 30%, transparent 100%)'
+            background: 'linear-gradient(0deg, var(--color-primary-900) 20%, var(--color-primary-300) 90%)'
         }
     };
 
@@ -99,13 +99,13 @@ export function Card(props: { product: Product }) {
                 <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-full"
+                    className="rounded-full text-primary hover:bg-white hover:text-primary"
                     onClick={() => setIsWishlisted(!isWishlisted)}
                 >
                     <Heart
                         className="h-4 w-4"
                         fill={isWishlisted ? 'currentColor' : 'none'}
-                        stroke={isWishlisted ? 'currentColor' : 'white'}
+                        stroke={isWishlisted ? 'currentColor' : 'oklch(0.4441 0.0559 70.11)'}
                     />
                 </Button>
             </motion.div>
