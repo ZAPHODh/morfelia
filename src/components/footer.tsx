@@ -103,15 +103,67 @@ export function Footer() {
 
     const handleSubscribe = (e: React.FormEvent) => {
         e.preventDefault()
-        // Handle newsletter subscription
         console.log("Subscribing email:", email)
         setEmail("")
-        // Show success message or toast notification
+
     }
 
     return (
         <footer className="pt-16 pb-8">
             <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 border-b pb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="flex items-start"
+                    >
+                        <div className="flex-shrink-0">
+                            <Shield className="w-10 h-10 text-primary" />
+                        </div>
+                        <div className="ml-4">
+                            <h3 className="text-base font-medium">Compra Segura</h3>
+                            <p className="mt-1 text-sm">
+                                Todas as transações são processadas com segurança e seus dados são protegidos.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="flex items-start"
+                    >
+                        <div className="flex-shrink-0">
+                            <Award className="w-10 h-10 text-primary" />
+                        </div>
+                        <div className="ml-4">
+                            <h3 className="text-base font-medium">Garantia de Qualidade</h3>
+                            <p className="mt-1 text-sm">
+                                Todas as nossas joias passam por rigorosos controles de qualidade e possuem certificado de
+                                autenticidade.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="flex items-start"
+                    >
+                        <div className="flex-shrink-0">
+                            <CreditCard className="w-10 h-10 text-primary" />
+                        </div>
+                        <div className="ml-4">
+                            <h3 className="text-base font-medium">Múltiplas Formas de Pagamento</h3>
+                            <p className="mt-1 text-sm">
+                                Aceitamos diversas formas de pagamento para sua conveniência.
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 gap-x-8 mb-16 border-b pb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -146,7 +198,7 @@ export function Footer() {
                             </div>
                         </div>
 
-                        <div className="mt-8">
+                        <div className="mt-8 hidden md:block">
                             <h3 className="text-sm font-semibold">Siga-nos</h3>
                             <div className="flex items-center mt-4 space-x-3">
                                 {socialIcons.map((social, index) => (
@@ -224,61 +276,25 @@ export function Footer() {
                             </p>
                         </form>
                     </motion.div>
+                    <div className="mt-4 block md:hidden">
+                        <h3 className="text-sm font-semibold">Siga-nos</h3>
+                        <div className="flex items-center mt-4 space-x-3">
+                            {socialIcons.map((social, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                                >
+                                    <SocialIcon href={social.href} icon={social.icon} label={social.label} />
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 border-b pb-16">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        className="flex items-start"
-                    >
-                        <div className="flex-shrink-0">
-                            <Shield className="w-10 h-10 text-primary" />
-                        </div>
-                        <div className="ml-4">
-                            <h3 className="text-base font-medium">Compra Segura</h3>
-                            <p className="mt-1 text-sm">
-                                Todas as transações são processadas com segurança e seus dados são protegidos.
-                            </p>
-                        </div>
-                    </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="flex items-start"
-                    >
-                        <div className="flex-shrink-0">
-                            <Award className="w-10 h-10 text-primary" />
-                        </div>
-                        <div className="ml-4">
-                            <h3 className="text-base font-medium">Garantia de Qualidade</h3>
-                            <p className="mt-1 text-sm">
-                                Todas as nossas joias passam por rigorosos controles de qualidade e possuem certificado de
-                                autenticidade.
-                            </p>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="flex items-start"
-                    >
-                        <div className="flex-shrink-0">
-                            <CreditCard className="w-10 h-10 text-primary" />
-                        </div>
-                        <div className="ml-4">
-                            <h3 className="text-base font-medium">Múltiplas Formas de Pagamento</h3>
-                            <p className="mt-1 text-sm">
-                                Aceitamos diversas formas de pagamento para sua conveniência.
-                            </p>
-                        </div>
-                    </motion.div>
-                </div>
                 <div className="sm:flex sm:items-center sm:justify-between">
+
                     <div className="flex flex-col sm:flex-row items-center">
                         <p className="text-sm">
                             © Copyright {format(new Date(), "yyyy")}, Todos os direitos reservados por Metamorfosis

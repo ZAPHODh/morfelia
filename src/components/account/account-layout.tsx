@@ -7,8 +7,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { User, ShoppingBag, Heart, Settings, MapPin, CreditCard, Bell, LogOut, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 interface NavItem {
     title: string
@@ -99,22 +99,46 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                 {isMobile ? (
                     <div className="flex items-center justify-between border-b pb-4 mb-4">
                         <h1 className="text-2xl font-serif">My Account</h1>
-                        <Sheet open={open} onOpenChange={setOpen}>
-                            <SheetTrigger asChild>
+                        <DropdownMenu open={open} onOpenChange={setOpen}>
+                            <DropdownMenuTrigger asChild>
                                 <Button variant="outline" size="icon">
                                     <Menu className="h-5 w-5" />
                                     <span className="sr-only">Toggle menu</span>
                                 </Button>
-                            </SheetTrigger>
-                            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                                <div className="px-2 py-6">
-                                    <div className="mb-8 flex items-center justify-between">
-                                        <h2 className="text-xl font-serif">My Account</h2>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-[300px] p-4 mr-6">
+                                <div className="space-y-1">
+                                    {navItems.map((item) => {
+                                        const isActive = pathname === item.href
+                                        return (
+                                            <DropdownMenuItem key={item.href} asChild>
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={() => setOpen(false)}
+                                                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${isActive ? "bg-gold-100 text-gold-900" : "text-muted-foreground hover:bg-gold-50 hover:text-gold-900"
+                                                        }`}
+                                                >
+                                                    {item.icon}
+                                                    {item.title}
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        )
+                                    })}
+                                    <div className="pt-4">
+                                        <DropdownMenuItem asChild>
+                                            <Button
+                                                variant="outline"
+                                                className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+                                                onClick={() => setOpen(false)}
+                                            >
+                                                <LogOut className="h-5 w-5" />
+                                                Sign Out
+                                            </Button>
+                                        </DropdownMenuItem>
                                     </div>
-                                    <NavLinks />
                                 </div>
-                            </SheetContent>
-                        </Sheet>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 ) : (
                     <div className="md:w-1/4 lg:w-1/5">
