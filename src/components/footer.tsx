@@ -270,7 +270,7 @@ export function Footer() {
                             </p>
                         </form>
                     </motion.div>
-                    <div className="mt-4 block md:hidden">
+                    <div className="block md:hidden">
                         <h3 className="text-sm font-semibold">Siga-nos</h3>
                         <div className="flex items-center mt-4 space-x-3">
                             {socialIcons.map((social, index) => (
