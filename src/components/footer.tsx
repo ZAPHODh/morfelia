@@ -61,23 +61,17 @@ const footerLinks = [
     {
         title: "Produtos",
         links: [
-            { name: "Anéis", href: "/categoria/aneis" },
-            { name: "Brincos", href: "/categoria/brincos" },
-            { name: "Colares", href: "/categoria/colares" },
-            { name: "Pulseiras", href: "/categoria/pulseiras" },
-            { name: "Relógios", href: "/categoria/relogios" },
-            { name: "Masculino", href: "/categoria/masculino" },
+            { name: "Categorias", href: "/category" },
+            { name: "Recentes", href: "/category" },
+            { name: "Sazonal", href: "/categoria/sazonal" },
         ],
     },
     {
         title: "Políticas",
         links: [
-            { name: "Envio", href: "/terms/shipping" },
+            { name: "Todas as políticas", href: "/terms" },
             { name: "Privacidade", href: "/terms/privacy" },
-            { name: "Pagamento", href: "/terms/payment" },
-            { name: "Garantia", href: "/terms/secure" },
             { name: "Termos e Condições", href: "/terms/term" },
-            { name: "Cookies", href: "/terms/cookies" },
         ],
     },
 ]
