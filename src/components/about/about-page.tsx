@@ -113,49 +113,6 @@ export default function AboutPage() {
                     </div>
                 </div>
             </section>
-            <section className="py-16 md:py-24 container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <h2 className="font-playfair text-3xl md:text-4xl mb-4">Meet Our Team</h2>
-                    <p className="text-gray-700 max-w-2xl mx-auto">
-                        Behind every Elegance creation is a team of passionate artisans, designers, and experts dedicated to
-                        bringing beauty to life.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {[
-                        {
-                            name: "Sofia Bertelli",
-                            role: "Creative Director",
-                            image: "/placeholder.svg?height=600&width=600",
-                            bio: "Daughter of founder Antonio Bertelli, Sofia brings a modern vision while honoring the brand's heritage.",
-                        },
-                        {
-                            name: "Marco Rossi",
-                            role: "Master Jeweler",
-                            image: "/placeholder.svg?height=600&width=600",
-                            bio: "With over 30 years of experience, Marco oversees our atelier and trains the next generation of craftsmen.",
-                        },
-                        {
-                            name: "Isabelle Chen",
-                            role: "Head of Design",
-                            image: "/placeholder.svg?height=600&width=600",
-                            bio: "Award-winning designer whose creations blend contemporary aesthetics with timeless elegance.",
-                        },
-                    ].map((member, index) => (
-                        <div key={index} className="bg-white rounded-lg overflow-hidden shadow-md">
-                            <div className="relative h-80">
-                                <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
-                            </div>
-                            <div className="p-6">
-                                <h3 className="font-playfair text-xl mb-1">{member.name}</h3>
-                                <p className=" mb-3">{member.role}</p>
-                                <p>{member.bio}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
             <section className="py-16 md:py-24 bg-primary">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="font-playfair text-3xl md:text-4xl mb-6">Experience the Elegance Difference</h2>
