@@ -25,7 +25,7 @@ export default function AboutPage() {
             <section className="py-16 md:py-24 container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 className="font-playfair text-3xl md:text-4xl mb-6 text-center md:text-start">Our Story</h2>
+                        <h2 className="font-playfair text-2xl md:text-4xl mb-6 text-center md:text-start">Our Story</h2>
                         <p className=" mb-4">
                             Founded in 1985 by master jeweler Antonio Bertelli, Elegance Jewelry began as a small atelier in Milan,
                             Italy. What started as a passion project quickly gained recognition for its exceptional craftsmanship and
@@ -59,7 +59,7 @@ export default function AboutPage() {
             <section className="py-16 md:py-24 bg">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
-                        <h2 className="font-playfair text-3xl md:text-4xl mb-4">Our Values</h2>
+                        <h2 className="font-playfair text-2xl md:text-4xl mb-4">Our Values</h2>
                         <p className="max-w-2xl mx-auto">
                             At Elegance Jewelry, our values guide everything we do, from sourcing the finest materials to crafting
                             each piece with meticulous attention to detail.
