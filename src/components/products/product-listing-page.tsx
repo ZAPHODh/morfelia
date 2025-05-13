@@ -26,8 +26,9 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { ProductGrid } from "./product-grid"
 import { Pagination } from "./pagination"
 import { Link } from "@/i18n/navigation"
+import { useLocale } from "next-intl"
 
-// Filter types
+
 type PriceRange = [number, number]
 type SortOption = "featured" | "newest" | "price-asc" | "price-desc" | "best-selling"
 
@@ -42,7 +43,7 @@ export default function ProductListingPage() {
     const initialMinPrice = Number(searchParams.get("minPrice")) || 0
     const initialMaxPrice = Number(searchParams.get("maxPrice")) || 10000
 
-
+    const locale = useLocale()
     const [category, setCategory] = useState<string>(initialCategory)
     const [priceRange, setPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
     const [sortOption, setSortOption] = useState<SortOption>(initialSort)
@@ -54,27 +55,20 @@ export default function ProductListingPage() {
     const [currentPage, setCurrentPage] = useState(1)
     const productsPerPage = 12
 
-    // Apply filters to products
     const filteredProducts = products.filter((product) => {
-        // Filter by category
         if (category !== "all" && product.category !== category) return false
 
-        // Filter by price range
         if (product.price < priceRange[0] || product.price > priceRange[1]) return false
 
-        // Filter by materials
         if (materials.length > 0 && !materials.some((material) => product.materials.includes(material))) return false
 
-        // Filter by gemstones
         if (gemstones.length > 0 && !gemstones.some((gemstone) => product.gemstones.includes(gemstone))) return false
 
-        // Filter by search query
         if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
 
         return true
     })
 
-    // Sort products
     const sortedProducts = [...filteredProducts].sort((a, b) => {
         switch (sortOption) {
             case "newest":
@@ -90,12 +84,10 @@ export default function ProductListingPage() {
         }
     })
 
-    // Get current page products
+
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-
-    // Update URL with filters
     useEffect(() => {
         const params = new URLSearchParams()
 
@@ -105,7 +97,7 @@ export default function ProductListingPage() {
         if (priceRange[0] > 0) params.set("minPrice", priceRange[0].toString())
         if (priceRange[1] < 10000) params.set("maxPrice", priceRange[1].toString())
 
-        const url = `/shop${params.toString() ? `?${params.toString()}` : ""}`
+        const url = `${locale}/products${params.toString() ? `?${params.toString()}` : ""}`
         window.history.replaceState({}, "", url)
 
         // Update active filters
@@ -254,7 +246,7 @@ export default function ProductListingPage() {
     )
 
     return (
-        <div className="container max-w-7xl py-8 px-4 md:px-6">
+        <div className="container max-w-7xl py-8 px-4 md:px-6 mx-auto">
             {/* Breadcrumb */}
             <div className="flex items-center text-sm mb-6">
                 <Link href="/" className="text-muted-foreground hover:text-foreground">
