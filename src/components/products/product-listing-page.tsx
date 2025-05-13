@@ -173,7 +173,7 @@ export default function ProductListingPage() {
 
     // Filter components
     const FilterControls = () => (
-        <div className="space-y-6">
+        <div className="space-y-6 mx-auto">
             <div>
                 <h3 className="font-medium mb-3">Categories</h3>
                 <div className="space-y-2">
