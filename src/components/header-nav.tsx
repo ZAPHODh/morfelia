@@ -82,7 +82,7 @@ export default function HeaderNav() {
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="left">
-                            <nav className="flex flex-col space-y-6 mt-10">
+                            <nav className="flex flex-col space-y-6 mt-10 p-4">
                                 {navItems.map((item) => (
                                     <div key={item.name} className="space-y-4">
                                         {item.hasDropdown ? (
