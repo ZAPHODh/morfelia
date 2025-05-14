@@ -34,13 +34,13 @@ export function FeaturedProduct({ product, reverse = false }: FeaturedProductPro
                     priority
                 />
                 {product.onSale && (
-                    <Badge className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 text-sm">
+                    <Badge className="absolute top-4 left-4 bg-red-500  px-3 py-1 text-sm">
                         {discountPercentage}% OFF
                     </Badge>
                 )}
             </div>
             <div className="space-y-6">
-                {product.isNew && <Badge className="bg-blue-500 text-white px-3 py-1">Novo</Badge>}
+                {product.isNew && <Badge className=" px-3 py-1">Novo</Badge>}
                 <h2 className="text-3xl font-bold">{product.name}</h2>
                 <p className="text-muted-foreground text-lg">{product.description}</p>
 
@@ -67,7 +67,7 @@ export function FeaturedProduct({ product, reverse = false }: FeaturedProductPro
                 )}
 
                 <div className="flex gap-4 pt-4">
-                    <Button size="lg" asChild>
+                    <Button size="lg" asChild >
                         <Link href={`/product/${product.id}`}>Ver Detalhes</Link>
                     </Button>
                     <Button size="lg" variant="outline">

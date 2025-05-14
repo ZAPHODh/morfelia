@@ -163,7 +163,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
                 {/* Quick view and add to cart */}
                 <div className="absolute bottom-0 left-0 right-0 p-2 flex gap-2 opacity-0 translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
-                    <Button variant="secondary" className="flex-1 bg-white/90 hover:bg-white" asChild>
+                    <Button variant="outline" className="flex-1" asChild >
                         <Link href={`/product/${product.id}`}>Ver Detalhes</Link>
                     </Button>
                     <Button className="flex-1">
