@@ -38,7 +38,7 @@ export function ProductSection({
 
     return (
         <section className={`py-12 ${className}`}>
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
                     <div>
                         <h2 className="text-3xl font-bold">{title}</h2>

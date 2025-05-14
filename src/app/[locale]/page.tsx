@@ -18,11 +18,11 @@ export default function Home() {
           showIndicators={true}
         />
       </section>
-      <section className="w-full py-16">
+      <section className="container mx-auto py-16">
         <CategoryMenu />
       </section>
 
-      <section className="w-full bg-muted/30">
+      <section className="container mx-auto bg-muted/30">
         <ProductSection
           title="Destaques da Coleção"
           subtitle="Peças exclusivas selecionadas especialmente para você"

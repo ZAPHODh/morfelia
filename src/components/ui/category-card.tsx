@@ -13,11 +13,11 @@ interface CategoryCardProps {
 export function CategoryCard({ title, imageSrc, href }: CategoryCardProps) {
     return (
         <Card
-            className="relative overflow-hidden rounded-lg shadow-md cursor-pointer container"
+            className="relative overflow-hidden rounded-lg shadow-md cursor-pointer"
         >
             <CardContent>
                 <Link href={href} className="block h-full">
-                    <div className="relative h-64 w-full">
+                    <div className="relative h-64 w-full ">
                         <Image
                             src={imageSrc || "/placeholder.svg"}
                             alt={title}

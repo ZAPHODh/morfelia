@@ -24,7 +24,7 @@ export function FeaturedProduct({ product, reverse = false }: FeaturedProductPro
         : 0
 
     return (
-        <div className={`container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${reverse ? "md:flex-row-reverse" : ""}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${reverse ? "md:flex-row-reverse" : ""}`}>
             <div className="relative aspect-square overflow-hidden rounded-lg">
                 <Image
                     src={product.images[0] || "/placeholder.svg"}

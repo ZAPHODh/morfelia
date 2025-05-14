@@ -104,7 +104,7 @@ export function Footer() {
 
     return (
         <footer className="pt-16 pb-8">
-            <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+            <div className="px-4 mx-auto sm:px-6 lg:px-8 container">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 border-b pb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
