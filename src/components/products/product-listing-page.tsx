@@ -25,7 +25,6 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { ProductGrid } from "./product-grid"
 import { Pagination } from "./pagination"
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
-import { useLocale } from "next-intl"
 import { useSearchParams } from "next/navigation"
 
 
