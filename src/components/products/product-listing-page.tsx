@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
 import { Filter, SlidersHorizontal, X, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -25,14 +24,17 @@ import { products } from "@/lib/product-data"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { ProductGrid } from "./product-grid"
 import { Pagination } from "./pagination"
-import { Link } from "@/i18n/navigation"
+import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import { useLocale } from "next-intl"
+import { useSearchParams } from "next/navigation"
 
 
 type PriceRange = [number, number]
 type SortOption = "featured" | "newest" | "price-asc" | "price-desc" | "best-selling"
 
 export default function ProductListingPage() {
+    const router = useRouter()
+    const pathname = usePathname()
     const searchParams = useSearchParams()
     const isMobile = useIsMobile()
 
@@ -42,30 +44,23 @@ export default function ProductListingPage() {
     const initialSearch = searchParams.get("search") || ""
     const initialMinPrice = Number(searchParams.get("minPrice")) || 0
     const initialMaxPrice = Number(searchParams.get("maxPrice")) || 10000
-
-    const locale = useLocale()
     const [category, setCategory] = useState<string>(initialCategory)
-    const [priceRange, setPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
+    const [localPriceRange, setLocalPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
+    const [debouncedPriceRange, setDebouncedPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
     const [sortOption, setSortOption] = useState<SortOption>(initialSort)
     const [searchQuery, setSearchQuery] = useState(initialSearch)
     const [materials, setMaterials] = useState<string[]>([])
     const [gemstones, setGemstones] = useState<string[]>([])
-    const [activeFilters, setActiveFilters] = useState<string[]>([])
+    const [activeFilters] = useState<string[]>([])
 
     const [currentPage, setCurrentPage] = useState(1)
     const productsPerPage = 12
-
     const filteredProducts = products.filter((product) => {
         if (category !== "all" && product.category !== category) return false
-
-        if (product.price < priceRange[0] || product.price > priceRange[1]) return false
-
+        if (product.price < debouncedPriceRange[0] || product.price > debouncedPriceRange[1]) return false
         if (materials.length > 0 && !materials.some((material) => product.materials.includes(material))) return false
-
         if (gemstones.length > 0 && !gemstones.some((gemstone) => product.gemstones.includes(gemstone))) return false
-
         if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
-
         return true
     })
 
@@ -88,42 +83,54 @@ export default function ProductListingPage() {
     const indexOfLastProduct = currentPage * productsPerPage
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+
     useEffect(() => {
-        const params = new URLSearchParams()
+        const timeout = setTimeout(() => {
+            const params = new URLSearchParams(searchParams.toString())
 
-        if (category !== "all") params.set("category", category)
-        if (sortOption !== "featured") params.set("sort", sortOption)
-        if (searchQuery) params.set("search", searchQuery)
-        if (priceRange[0] > 0) params.set("minPrice", priceRange[0].toString())
-        if (priceRange[1] < 10000) params.set("maxPrice", priceRange[1].toString())
+            params.set("category", category)
+            params.set("sort", sortOption)
+            params.set("minPrice", debouncedPriceRange[0].toString())
+            params.set("maxPrice", debouncedPriceRange[1].toString())
+            params.set("search", searchQuery)
+            materials.length > 0 ? params.set("materials", materials.join(",")) : params.delete("materials")
+            gemstones.length > 0 ? params.set("gemstones", gemstones.join(",")) : params.delete("gemstones")
 
-        const url = `${locale}/products${params.toString() ? `?${params.toString()}` : ""}`
-        window.history.replaceState({}, "", url)
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+        }, 300)
 
-        // Update active filters
-        const newActiveFilters: string[] = []
-        if (category !== "all") newActiveFilters.push(`Category: ${category}`)
-        if (priceRange[0] > 0 || priceRange[1] < 10000)
-            newActiveFilters.push(`Price: $${priceRange[0]} - $${priceRange[1]}`)
-        materials.forEach((material) => newActiveFilters.push(`Material: ${material}`))
-        gemstones.forEach((gemstone) => newActiveFilters.push(`Gemstone: ${gemstone}`))
-        setActiveFilters(newActiveFilters)
+        return () => clearTimeout(timeout)
+    }, [category, sortOption, debouncedPriceRange, searchQuery, materials, gemstones])
 
-        // Reset to first page when filters change
-        setCurrentPage(1)
-    }, [category, priceRange, sortOption, searchQuery, materials, gemstones])
+    useEffect(() => {
+        const handlePopState = () => {
+            const params = new URLSearchParams(window.location.search)
+            setCategory(params.get("category") || "all")
+            setSortOption(params.get("sort") as SortOption || "featured")
+            setDebouncedPriceRange([
+                Number(params.get("minPrice")) || 0,
+                Number(params.get("maxPrice")) || 10000
+            ])
+            setSearchQuery(params.get("search") || "")
+            setMaterials(params.get("materials")?.split(",") || [])
+            setGemstones(params.get("gemstones")?.split(",") || [])
+        }
+        window.addEventListener('popstate', handlePopState)
+        return () => window.removeEventListener('popstate', handlePopState)
+    }, [])
 
-    // Handle material toggle
     const handleMaterialToggle = (material: string) => {
         setMaterials((prev) => (prev.includes(material) ? prev.filter((m) => m !== material) : [...prev, material]))
     }
-
-    // Handle gemstone toggle
     const handleGemstoneToggle = (gemstone: string) => {
         setGemstones((prev) => (prev.includes(gemstone) ? prev.filter((g) => g !== gemstone) : [...prev, gemstone]))
     }
 
-    // Handle filter removal
+    const handleSliderChange = (value: number[]) => {
+        setLocalPriceRange(value as PriceRange)
+        setDebouncedPriceRange(value as PriceRange)
+    }
+
     const handleRemoveFilter = (filter: string) => {
         const [type, value] = filter.split(": ")
 
@@ -132,7 +139,8 @@ export default function ProductListingPage() {
                 setCategory("all")
                 break
             case "Price":
-                setPriceRange([0, 10000])
+                setLocalPriceRange([0, 10000])
+                setDebouncedPriceRange([0, 10000])
                 break
             case "Material":
                 setMaterials((prev) => prev.filter((m) => m !== value))
@@ -143,17 +151,16 @@ export default function ProductListingPage() {
         }
     }
 
-    // Clear all filters
     const clearAllFilters = () => {
         setCategory("all")
-        setPriceRange([0, 10000])
+        setLocalPriceRange([0, 10000])
+        setDebouncedPriceRange([0, 10000])
         setSortOption("featured")
         setSearchQuery("")
         setMaterials([])
         setGemstones([])
     }
 
-    // Format price for display
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -163,7 +170,6 @@ export default function ProductListingPage() {
         }).format(price)
     }
 
-    // Filter components
     const FilterControls = () => (
         <div className="space-y-6 mx-auto">
             <div>
@@ -181,30 +187,26 @@ export default function ProductListingPage() {
                     ))}
                 </div>
             </div>
-
             <Separator />
-
             <div>
                 <h3 className="font-medium mb-3">Price Range</h3>
                 <div className="space-y-4">
                     <Slider
-                        value={priceRange}
+                        value={localPriceRange}
                         min={0}
                         max={10000}
                         step={100}
-                        onValueChange={(value) => setPriceRange(value as PriceRange)}
+                        onValueChange={handleSliderChange}
                         className="py-4"
                     />
                     <div className="flex items-center justify-between">
-                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(priceRange[0])}</div>
+                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(localPriceRange[0])}</div>
                         <div className="text-sm text-muted-foreground">to</div>
-                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(priceRange[1])}</div>
+                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(localPriceRange[1])}</div>
                     </div>
                 </div>
             </div>
-
             <Separator />
-
             <div>
                 <h3 className="font-medium mb-3">Materials</h3>
                 <div className="space-y-2">
@@ -222,9 +224,7 @@ export default function ProductListingPage() {
                     ))}
                 </div>
             </div>
-
             <Separator />
-
             <div>
                 <h3 className="font-medium mb-3">Gemstones</h3>
                 <div className="space-y-2">
@@ -244,10 +244,8 @@ export default function ProductListingPage() {
             </div>
         </div>
     )
-
     return (
         <div className="container max-w-7xl py-8 px-4 md:px-6 mx-auto">
-            {/* Breadcrumb */}
             <div className="flex items-center text-sm mb-6">
                 <Link href="/" className="text-muted-foreground hover:text-foreground">
                     Home
@@ -261,8 +259,6 @@ export default function ProductListingPage() {
                     </>
                 )}
             </div>
-
-            {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
                     <h1 className="text-3xl font-serif mb-2">
@@ -284,7 +280,6 @@ export default function ProductListingPage() {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
-
                     <Select value={sortOption} onValueChange={(value) => setSortOption(value as SortOption)}>
                         <SelectTrigger className="w-full sm:w-[180px]">
                             <SelectValue placeholder="Sort by" />
@@ -297,7 +292,6 @@ export default function ProductListingPage() {
                             <SelectItem value="best-selling">Best Selling</SelectItem>
                         </SelectContent>
                     </Select>
-
                     {isMobile && (
                         <Sheet>
                             <SheetTrigger asChild>
@@ -327,8 +321,6 @@ export default function ProductListingPage() {
                     )}
                 </div>
             </div>
-
-            {/* Active filters */}
             {activeFilters.length > 0 && (
                 <div className="mb-6">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -349,7 +341,6 @@ export default function ProductListingPage() {
             )}
 
             <div className="flex flex-col md:flex-row gap-8">
-
                 {!isMobile && (
                     <div className="w-full md:w-64 flex-shrink-0">
                         <div className="sticky top-8 space-y-2">
@@ -366,14 +357,10 @@ export default function ProductListingPage() {
                         </div>
                     </div>
                 )}
-
-                {/* Product grid */}
                 <div className="flex-1">
                     {currentProducts.length > 0 ? (
                         <>
                             <ProductGrid products={currentProducts} />
-
-                            {/* Pagination */}
                             <div className="mt-8">
                                 <Pagination
                                     currentPage={currentPage}
