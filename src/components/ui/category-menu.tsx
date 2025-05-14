@@ -6,31 +6,31 @@ const categories = [
     {
         id: "brincos",
         title: "Brincos",
-        imageSrc: "/placeholder.svg?height=400&width=300",
+        imageSrc: "https://images.unsplash.com/photo-1701777892770-df3bf8006fd8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         href: "/categories/brincos",
     },
     {
         id: "colares",
         title: "Colares",
-        imageSrc: "/placeholder.svg?height=400&width=300",
+        imageSrc: "https://images.unsplash.com/photo-1589128777073-263566ae5e4d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         href: "categories/colares",
     },
     {
         id: "aneis",
         title: "Anéis",
-        imageSrc: "/placeholder.svg?height=400&width=300",
+        imageSrc: "https://images.unsplash.com/photo-1550368566-f9cc32d7392d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         href: "/categories/aneis",
     },
     {
         id: "pulseiras",
         title: "Pulseiras",
-        imageSrc: "/placeholder.svg?height=400&width=300",
+        imageSrc: "https://images.unsplash.com/photo-1633810543462-77c4a3b13f07?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         href: "/categories/pulseiras",
     },
     {
         id: "masculino",
         title: "Masculino",
-        imageSrc: "/placeholder.svg?height=400&width=300",
+        imageSrc: "https://images.unsplash.com/photo-1453396450673-3fe83d2db2c4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         href: "/categories/masculino",
     },
 ]

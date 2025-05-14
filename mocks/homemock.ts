@@ -1,11 +1,12 @@
 import { GalleryItem } from "@/components/ui/carousel-gallery"
 import type { Product } from '@/components/products/product-card'
+
 // Exemplo de itens para o carrossel
 export const galleryItems: GalleryItem[] = [
     {
         id: "1",
         type: "image",
-        src: "/placeholder.svg?height=1080&width=1920",
+        src: "https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: "Coleção Primavera 2025",
         width: 1920,
         height: 1080,
@@ -16,7 +17,7 @@ export const galleryItems: GalleryItem[] = [
     {
         id: "2",
         type: "image",
-        src: "/placeholder.svg?height=1080&width=1920",
+        src: "https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: "Promoção Especial",
         width: 1920,
         height: 1080,
@@ -26,8 +27,8 @@ export const galleryItems: GalleryItem[] = [
     },
     {
         id: "3",
-        type: "video",
-        src: "https://www.youtube.com/watch?v=8EPFqerB6qU", // Substitua por um URL de vídeo real
+        type: "image",
+        src: "https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: "Vídeo da nova coleção",
         width: 1920,
         height: 1080,
@@ -38,7 +39,7 @@ export const galleryItems: GalleryItem[] = [
     {
         id: "4",
         type: "image",
-        src: "/placeholder.svg?height=1080&width=1920",
+        src: "https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         alt: "Joias Personalizadas",
         width: 1920,
         height: 1080,
@@ -56,7 +57,7 @@ export const seasonalProducts: Product[] = [
         description: "Colar delicado com pingente de flor em ouro rosé, perfeito para a primavera.",
         price: 1299.9,
         originalPrice: 1499.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "colares",
         materials: ["Ouro Rosé 18k"],
         gemstones: ["Diamante", "Safira Rosa"],
@@ -71,7 +72,7 @@ export const seasonalProducts: Product[] = [
         name: "Brincos Gota de Orvalho",
         description: "Brincos inspirados em gotas de orvalho com zircônias e pérolas.",
         price: 899.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "brincos",
         materials: ["Prata 925"],
         gemstones: ["Zircônia", "Pérola"],
@@ -86,7 +87,7 @@ export const seasonalProducts: Product[] = [
         description: "Anel com design de folhas em ouro amarelo com detalhes em citrino.",
         price: 1599.9,
         originalPrice: 1899.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "aneis",
         materials: ["Ouro Amarelo 18k"],
         gemstones: ["Citrino", "Diamante"],
@@ -101,7 +102,7 @@ export const seasonalProducts: Product[] = [
         name: "Pulseira Flores do Campo",
         description: "Pulseira delicada com pequenas flores cravejadas com pedras coloridas.",
         price: 1099.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "pulseiras",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Safira", "Esmeralda", "Rubi"],
@@ -117,7 +118,7 @@ export const seasonalProducts: Product[] = [
         description: "Pingente em formato de borboleta com asas cravejadas de zircônias coloridas.",
         price: 799.9,
         originalPrice: 999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "colares",
         materials: ["Prata 925"],
         gemstones: ["Zircônia"],
@@ -133,7 +134,7 @@ export const seasonalProducts: Product[] = [
         description: "Conjunto com colar, brincos e pulseira com motivos florais para a primavera.",
         price: 2499.9,
         originalPrice: 2999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "conjuntos",
         materials: ["Ouro Rosé 18k"],
         gemstones: ["Diamante", "Ametista"],
@@ -145,7 +146,6 @@ export const seasonalProducts: Product[] = [
     },
 ]
 
-
 export const saleProducts: Product[] = [
     {
         id: "o1",
@@ -153,7 +153,7 @@ export const saleProducts: Product[] = [
         description: "Anel solitário com diamante de 0.5 quilates em ouro branco 18k.",
         price: 3999.9,
         originalPrice: 5999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "aneis",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Diamante"],
@@ -168,7 +168,7 @@ export const saleProducts: Product[] = [
         description: "Colar em ouro amarelo 18k com malha veneziana, design clássico e atemporal.",
         price: 1899.9,
         originalPrice: 2499.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "colares",
         materials: ["Ouro Amarelo 18k"],
         rating: 4.7,
@@ -182,7 +182,7 @@ export const saleProducts: Product[] = [
         description: "Brincos de argola em prata 925 cravejados com zircônias.",
         price: 499.9,
         originalPrice: 799.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "brincos",
         materials: ["Prata 925"],
         gemstones: ["Zircônia"],
@@ -197,7 +197,7 @@ export const saleProducts: Product[] = [
         description: "Pulseira riviera com zircônias em prata 925 banhada a ródio.",
         price: 699.9,
         originalPrice: 999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "pulseiras",
         materials: ["Prata 925"],
         gemstones: ["Zircônia"],
@@ -213,10 +213,12 @@ export const featuredProducts: Product[] = [
     {
         id: "f1",
         name: "Conjunto Luxo Safira",
-        description:
-            "Conjunto exclusivo com colar e brincos de safira azul e diamantes em ouro branco 18k. Uma peça de luxo para ocasiões especiais que combina elegância e sofisticação.",
+        description: "Conjunto exclusivo com colar e brincos de safira azul e diamantes em ouro branco 18k.",
         price: 12999.9,
-        images: ["/placeholder.svg?height=400&width=400", "/placeholder.svg?height=400&width=400"],
+        images: [
+            "https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
         category: "conjuntos",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Safira", "Diamante"],
@@ -228,11 +230,13 @@ export const featuredProducts: Product[] = [
     {
         id: "f2",
         name: "Relógio Elegance Diamond",
-        description:
-            "Relógio feminino com caixa em ouro rosé, mostrador em madrepérola e índices em diamante. Movimento suíço de alta precisão e pulseira em couro genuíno.",
+        description: "Relógio feminino com caixa em ouro rosé, mostrador em madrepérola e índices em diamante.",
         price: 8999.9,
         originalPrice: 10999.9,
-        images: ["/placeholder.svg?height=400&width=400", "/placeholder.svg?height=400&width=400"],
+        images: [
+            "https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ",
+            "https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
         category: "relogios",
         materials: ["Ouro Rosé 18k", "Couro"],
         gemstones: ["Diamante"],
@@ -251,7 +255,7 @@ export const newArrivals: Product[] = [
         name: "Anel Esmeralda Colombiana",
         description: "Anel com esmeralda colombiana de 1.2 quilates cercada por diamantes.",
         price: 7999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "aneis",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Esmeralda", "Diamante"],
@@ -265,7 +269,7 @@ export const newArrivals: Product[] = [
         name: "Brincos Cascata de Diamantes",
         description: "Brincos longos com diamantes em cascata, design moderno e elegante.",
         price: 5999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "brincos",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Diamante"],
@@ -279,7 +283,7 @@ export const newArrivals: Product[] = [
         name: "Pulseira Tennis Safira",
         description: "Pulseira estilo tennis com safiras azuis intercaladas com diamantes.",
         price: 4599.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "pulseiras",
         materials: ["Ouro Branco 18k"],
         gemstones: ["Safira", "Diamante"],
@@ -293,7 +297,7 @@ export const newArrivals: Product[] = [
         name: "Colar Gota de Rubi",
         description: "Colar com pingente em formato de gota com rubi natural e contorno de diamantes.",
         price: 3999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1616837874254-8d5aaa63e273?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "colares",
         materials: ["Ouro Amarelo 18k"],
         gemstones: ["Rubi", "Diamante"],
@@ -307,7 +311,7 @@ export const newArrivals: Product[] = [
         name: "Aliança Eternidade",
         description: "Aliança completa cravejada com diamantes em todo o aro.",
         price: 6999.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1585960622850-ed33c41d6418?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "],
         category: "aliancas",
         materials: ["Platina"],
         gemstones: ["Diamante"],
@@ -321,7 +325,7 @@ export const newArrivals: Product[] = [
         name: "Bracelete Serpente",
         description: "Bracelete em formato de serpente com olhos de esmeralda e corpo articulado.",
         price: 4299.9,
-        images: ["/placeholder.svg?height=400&width=400"],
+        images: ["https://images.unsplash.com/photo-1531995811006-35cb42e1a022?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"],
         category: "pulseiras",
         materials: ["Ouro Amarelo 18k"],
         gemstones: ["Esmeralda"],

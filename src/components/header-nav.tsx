@@ -1,5 +1,5 @@
 "use client"
-import Logo from '@/../public/logo.png'
+import Logo from '@/../public/logo.jpg'
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
@@ -38,7 +38,7 @@ export default function HeaderNav() {
         <header className="w-full py-4 px-4 md:px-6">
             <div className="container mx-auto flex flex-col items-center">
                 <Link href="/" className="mb-4">
-                    <div className="relative h-12 w-40 bg-black">
+                    <div className="relative h-12 w-40">
                         <Image src={Logo.src} alt="Logo" fill className="object-contain" priority />
                     </div>
                 </Link>
