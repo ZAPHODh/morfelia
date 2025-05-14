@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Filter, SlidersHorizontal, X, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,255 +16,135 @@ import {
 } from "@/components/ui/sheet"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
-import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-
-import { products } from "@/lib/product-data"
-import { useIsMobile } from "@/hooks/use-mobile"
 import { ProductGrid } from "./product-grid"
 import { Pagination } from "./pagination"
-import { Link, usePathname, useRouter } from "@/i18n/navigation"
-import { useSearchParams } from "next/navigation"
-
-
-type PriceRange = [number, number]
-type SortOption = "featured" | "newest" | "price-asc" | "price-desc" | "best-selling"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { PriceRangeSlider } from "./price-range-slider"
+import { useProductFilters } from "@/hooks/use-product-filters"
+import { Link } from "@/i18n/navigation"
 
 export default function ProductListingPage() {
-    const router = useRouter()
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
     const isMobile = useIsMobile()
+    const [isMounted, setIsMounted] = useState(false)
 
+    const { filters, dispatch, paginatedProducts, totalPages, activeFilters, formatPrice, isPending } =
+        useProductFilters(12)
 
-    const initialCategory = searchParams.get("category") || "all"
-    const initialSort = (searchParams.get("sort") as SortOption) || "featured"
-    const initialSearch = searchParams.get("search") || ""
-    const initialMinPrice = Number(searchParams.get("minPrice")) || 0
-    const initialMaxPrice = Number(searchParams.get("maxPrice")) || 10000
-    const [category, setCategory] = useState<string>(initialCategory)
-    const [localPriceRange, setLocalPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
-    const [debouncedPriceRange, setDebouncedPriceRange] = useState<PriceRange>([initialMinPrice, initialMaxPrice])
-    const [sortOption, setSortOption] = useState<SortOption>(initialSort)
-    const [searchQuery, setSearchQuery] = useState(initialSearch)
-    const [materials, setMaterials] = useState<string[]>([])
-    const [gemstones, setGemstones] = useState<string[]>([])
-    const [activeFilters] = useState<string[]>([])
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const productsPerPage = 12
-    const filteredProducts = products.filter((product) => {
-        if (category !== "all" && product.category !== category) return false
-        if (product.price < debouncedPriceRange[0] || product.price > debouncedPriceRange[1]) return false
-        if (materials.length > 0 && !materials.some((material) => product.materials.includes(material))) return false
-        if (gemstones.length > 0 && !gemstones.some((gemstone) => product.gemstones.includes(gemstone))) return false
-        if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false
-        return true
-    })
-
-    const sortedProducts = [...filteredProducts].sort((a, b) => {
-        switch (sortOption) {
-            case "newest":
-                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            case "price-asc":
-                return a.price - b.price
-            case "price-desc":
-                return b.price - a.price
-            case "best-selling":
-                return b.soldCount - a.soldCount
-            default:
-                return a.featured ? -1 : b.featured ? 1 : 0
-        }
-    })
-
-
-    const indexOfLastProduct = currentPage * productsPerPage
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-    const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-
+    // Initialize component
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            const params = new URLSearchParams(searchParams.toString())
-
-            params.set("category", category)
-            params.set("sort", sortOption)
-            params.set("minPrice", debouncedPriceRange[0].toString())
-            params.set("maxPrice", debouncedPriceRange[1].toString())
-            params.set("search", searchQuery)
-            materials.length > 0 ? params.set("materials", materials.join(",")) : params.delete("materials")
-            gemstones.length > 0 ? params.set("gemstones", gemstones.join(",")) : params.delete("gemstones")
-
-            router.replace(`${pathname}?${params.toString()}`, { scroll: false })
-        }, 300)
-
-        return () => clearTimeout(timeout)
-    }, [category, sortOption, debouncedPriceRange, searchQuery, materials, gemstones])
-
-    useEffect(() => {
-        const handlePopState = () => {
-            const params = new URLSearchParams(window.location.search)
-            setCategory(params.get("category") || "all")
-            setSortOption(params.get("sort") as SortOption || "featured")
-            setDebouncedPriceRange([
-                Number(params.get("minPrice")) || 0,
-                Number(params.get("maxPrice")) || 10000
-            ])
-            setSearchQuery(params.get("search") || "")
-            setMaterials(params.get("materials")?.split(",") || [])
-            setGemstones(params.get("gemstones")?.split(",") || [])
-        }
-        window.addEventListener('popstate', handlePopState)
-        return () => window.removeEventListener('popstate', handlePopState)
+        setIsMounted(true)
     }, [])
 
-    const handleMaterialToggle = (material: string) => {
-        setMaterials((prev) => (prev.includes(material) ? prev.filter((m) => m !== material) : [...prev, material]))
-    }
-    const handleGemstoneToggle = (gemstone: string) => {
-        setGemstones((prev) => (prev.includes(gemstone) ? prev.filter((g) => g !== gemstone) : [...prev, gemstone]))
-    }
-
-    const handleSliderChange = (value: number[]) => {
-        setLocalPriceRange(value as PriceRange)
-        setDebouncedPriceRange(value as PriceRange)
-    }
-
-    const handleRemoveFilter = (filter: string) => {
-        const [type, value] = filter.split(": ")
-
-        switch (type) {
-            case "Category":
-                setCategory("all")
-                break
-            case "Price":
-                setLocalPriceRange([0, 10000])
-                setDebouncedPriceRange([0, 10000])
-                break
-            case "Material":
-                setMaterials((prev) => prev.filter((m) => m !== value))
-                break
-            case "Gemstone":
-                setGemstones((prev) => prev.filter((g) => g !== value))
-                break
-        }
-    }
-
-    const clearAllFilters = () => {
-        setCategory("all")
-        setLocalPriceRange([0, 10000])
-        setDebouncedPriceRange([0, 10000])
-        setSortOption("featured")
-        setSearchQuery("")
-        setMaterials([])
-        setGemstones([])
-    }
-
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(price)
-    }
-
-    const FilterControls = () => (
-        <div className="space-y-6 mx-auto">
-            <div>
-                <h3 className="font-medium mb-3">Categories</h3>
-                <div className="space-y-2">
-                    {["all", "rings", "necklaces", "earrings", "bracelets", "watches"].map((cat) => (
-                        <div key={cat} className="flex items-center">
-                            <button
-                                className={`text-sm capitalize ${category === cat ? "text-gold-700 font-medium" : "text-muted-foreground"}`}
-                                onClick={() => setCategory(cat)}
-                            >
-                                {cat === "all" ? "All Jewelry" : cat}
-                            </button>
-                        </div>
-                    ))}
+    // Filter controls component
+    const FilterControls = useMemo(() => {
+        return (
+            <div className="space-y-6 mx-auto">
+                <div>
+                    <h3 className="font-medium mb-3">Categories</h3>
+                    <div className="space-y-2">
+                        {["all", "rings", "necklaces", "earrings", "bracelets", "watches"].map((cat) => (
+                            <div key={cat} className="flex items-center">
+                                <button
+                                    className={`text-sm capitalize ${filters.category === cat ? "text-gold-700 font-medium" : "text-muted-foreground"
+                                        }`}
+                                    onClick={() => dispatch({ type: "SET_CATEGORY", payload: cat })}
+                                >
+                                    {cat === "all" ? "All Jewelry" : cat}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <Separator />
-            <div>
-                <h3 className="font-medium mb-3">Price Range</h3>
-                <div className="space-y-4">
-                    <Slider
-                        value={localPriceRange}
-                        min={0}
-                        max={10000}
-                        step={100}
-                        onValueChange={handleSliderChange}
-                        className="py-4"
-                    />
-                    <div className="flex items-center justify-between">
-                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(localPriceRange[0])}</div>
-                        <div className="text-sm text-muted-foreground">to</div>
-                        <div className="border rounded-md px-2 py-1 text-sm">{formatPrice(localPriceRange[1])}</div>
+
+                <Separator />
+
+                <div>
+                    <h3 className="font-medium mb-3">Price Range</h3>
+                    {isMounted && (
+                        <PriceRangeSlider
+                            min={0}
+                            max={10000}
+                            initialMin={filters.priceRange[0]}
+                            initialMax={filters.priceRange[1]}
+                            step={100}
+                            formatPrice={formatPrice}
+                            onRangeChange={(min, max) => dispatch({ type: "SET_PRICE_RANGE", payload: [min, max] })}
+                        />
+                    )}
+                </div>
+
+                <Separator />
+
+                <div>
+                    <h3 className="font-medium mb-3">Materials</h3>
+                    <div className="space-y-2">
+                        {["Gold", "Silver", "Platinum", "Rose Gold", "White Gold"].map((material) => (
+                            <div key={material} className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={`material-${material}`}
+                                    checked={filters.materials.includes(material)}
+                                    onCheckedChange={() => dispatch({ type: "TOGGLE_MATERIAL", payload: material })}
+                                />
+                                <Label htmlFor={`material-${material}`} className="text-sm">
+                                    {material}
+                                </Label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                    <h3 className="font-medium mb-3">Gemstones</h3>
+                    <div className="space-y-2">
+                        {["Diamond", "Sapphire", "Ruby", "Emerald", "Pearl", "Amethyst"].map((gemstone) => (
+                            <div key={gemstone} className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={`gemstone-${gemstone}`}
+                                    checked={filters.gemstones.includes(gemstone)}
+                                    onCheckedChange={() => dispatch({ type: "TOGGLE_GEMSTONE", payload: gemstone })}
+                                />
+                                <Label htmlFor={`gemstone-${gemstone}`} className="text-sm">
+                                    {gemstone}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-            <Separator />
-            <div>
-                <h3 className="font-medium mb-3">Materials</h3>
-                <div className="space-y-2">
-                    {["Gold", "Silver", "Platinum", "Rose Gold", "White Gold"].map((material) => (
-                        <div key={material} className="flex items-center space-x-2">
-                            <Checkbox
-                                id={`material-${material}`}
-                                checked={materials.includes(material)}
-                                onCheckedChange={() => handleMaterialToggle(material)}
-                            />
-                            <Label htmlFor={`material-${material}`} className="text-sm">
-                                {material}
-                            </Label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-            <Separator />
-            <div>
-                <h3 className="font-medium mb-3">Gemstones</h3>
-                <div className="space-y-2">
-                    {["Diamond", "Sapphire", "Ruby", "Emerald", "Pearl", "Amethyst"].map((gemstone) => (
-                        <div key={gemstone} className="flex items-center space-x-2">
-                            <Checkbox
-                                id={`gemstone-${gemstone}`}
-                                checked={gemstones.includes(gemstone)}
-                                onCheckedChange={() => handleGemstoneToggle(gemstone)}
-                            />
-                            <Label htmlFor={`gemstone-${gemstone}`} className="text-sm">
-                                {gemstone}
-                            </Label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    )
+        )
+    }, [filters, isMounted, formatPrice, dispatch])
+
     return (
         <div className="container max-w-7xl py-8 px-4 md:px-6 mx-auto">
+            {/* Breadcrumb */}
             <div className="flex items-center text-sm mb-6">
                 <Link href="/" className="text-muted-foreground hover:text-foreground">
                     Home
                 </Link>
                 <span className="mx-2 text-muted-foreground">/</span>
                 <span>Shop</span>
-                {category !== "all" && (
+                {filters.category !== "all" && (
                     <>
                         <span className="mx-2 text-muted-foreground">/</span>
-                        <span className="capitalize">{category}</span>
+                        <span className="capitalize">{filters.category}</span>
                     </>
                 )}
             </div>
+
+            {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div>
                     <h1 className="text-3xl font-serif mb-2">
-                        {category === "all" ? "All Jewelry" : `${category.charAt(0).toUpperCase() + category.slice(1)}`}
+                        {filters.category === "all"
+                            ? "All Jewelry"
+                            : `${filters.category.charAt(0).toUpperCase() + filters.category.slice(1)}`}
                     </h1>
                     <p className="text-muted-foreground">
-                        {filteredProducts.length} {filteredProducts.length === 1 ? "product" : "products"} available
+                        {paginatedProducts.length} {paginatedProducts.length === 1 ? "product" : "products"} available
                     </p>
                 </div>
 
@@ -275,11 +155,23 @@ export default function ProductListingPage() {
                             type="search"
                             placeholder="Search jewelry..."
                             className="pl-10 w-full sm:w-[250px]"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={filters.search}
+                            onChange={(e) => dispatch({ type: "SET_SEARCH", payload: e.target.value })}
                         />
+                        {filters.search && (
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground hover:text-foreground"
+                                onClick={() => dispatch({ type: "SET_SEARCH", payload: "" })}
+                                aria-label="Clear search"
+                            >
+                                <X className="h-3.5 w-3.5" />
+                            </Button>
+                        )}
                     </div>
-                    <Select value={sortOption} onValueChange={(value) => setSortOption(value as SortOption)}>
+                    {/* eslint-disable  @typescript-eslint/no-explicit-any */}
+                    <Select value={filters.sort} onValueChange={(value) => dispatch({ type: "SET_SORT", payload: value as any })}>
                         <SelectTrigger className="w-full sm:w-[180px]">
                             <SelectValue placeholder="Sort by" />
                         </SelectTrigger>
@@ -291,6 +183,7 @@ export default function ProductListingPage() {
                             <SelectItem value="best-selling">Best Selling</SelectItem>
                         </SelectContent>
                     </Select>
+
                     {isMobile && (
                         <Sheet>
                             <SheetTrigger asChild>
@@ -304,10 +197,10 @@ export default function ProductListingPage() {
                                     <SheetTitle>Filters</SheetTitle>
                                     <SheetDescription>Refine your search with the following filters</SheetDescription>
                                 </SheetHeader>
-                                <FilterControls />
+                                {FilterControls}
                                 <div className="flex justify-between mt-8 pt-4 border-t">
                                     <SheetClose asChild>
-                                        <Button variant="outline" onClick={clearAllFilters}>
+                                        <Button variant="outline" onClick={() => dispatch({ type: "RESET_FILTERS" })}>
                                             Clear All
                                         </Button>
                                     </SheetClose>
@@ -320,6 +213,8 @@ export default function ProductListingPage() {
                     )}
                 </div>
             </div>
+
+            {/* Active filters */}
             {activeFilters.length > 0 && (
                 <div className="mb-6">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -327,19 +222,26 @@ export default function ProductListingPage() {
                         {activeFilters.map((filter) => (
                             <Badge key={filter} variant="outline" className="flex items-center gap-1 bg-muted">
                                 {filter}
-                                <button onClick={() => handleRemoveFilter(filter)}>
+                                <button onClick={() => dispatch({ type: "REMOVE_FILTER", payload: filter })}>
                                     <X className="h-3 w-3" />
                                 </button>
                             </Badge>
                         ))}
-                        <Button variant="link" size="sm" onClick={clearAllFilters} className="text-gold-600 hover:text-gold-700">
+                        <Button
+                            variant="link"
+                            size="sm"
+                            onClick={() => dispatch({ type: "RESET_FILTERS" })}
+                            className="text-gold-600 hover:text-gold-700"
+                        >
                             Clear All
                         </Button>
                     </div>
                 </div>
             )}
 
+            {/* Main content */}
             <div className="flex flex-col md:flex-row gap-8">
+                {/* Sidebar filters - desktop */}
                 {!isMobile && (
                     <div className="w-full md:w-64 flex-shrink-0">
                         <div className="sticky top-8 space-y-2">
@@ -347,24 +249,35 @@ export default function ProductListingPage() {
                                 <SlidersHorizontal className="h-5 w-5" />
                                 <h2 className="font-medium">Filters</h2>
                             </div>
-                            <FilterControls />
+                            {FilterControls}
                             <div className="pt-4 mt-6">
-                                <Button variant="outline" size="sm" onClick={clearAllFilters} className="w-full">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => dispatch({ type: "RESET_FILTERS" })}
+                                    className="w-full"
+                                >
                                     Clear All Filters
                                 </Button>
                             </div>
                         </div>
                     </div>
                 )}
+
+                {/* Product grid */}
                 <div className="flex-1">
-                    {currentProducts.length > 0 ? (
+                    {paginatedProducts.length > 0 ? (
                         <>
-                            <ProductGrid products={currentProducts} />
+                            <div className={isPending ? "opacity-70 transition-opacity duration-200" : ""}>
+                                <ProductGrid products={paginatedProducts} />
+                            </div>
+
+                            {/* Pagination */}
                             <div className="mt-8">
                                 <Pagination
-                                    currentPage={currentPage}
-                                    totalPages={Math.ceil(sortedProducts.length / productsPerPage)}
-                                    onPageChange={setCurrentPage}
+                                    currentPage={filters.page}
+                                    totalPages={totalPages}
+                                    onPageChange={(page) => dispatch({ type: "SET_PAGE", payload: page })}
                                 />
                             </div>
                         </>
@@ -372,7 +285,7 @@ export default function ProductListingPage() {
                         <div className="text-center py-16 border rounded-lg">
                             <h3 className="text-lg font-medium mb-2">No products found</h3>
                             <p className="text-muted-foreground mb-6">Try adjusting your filters or search criteria</p>
-                            <Button onClick={clearAllFilters}>Clear All Filters</Button>
+                            <Button onClick={() => dispatch({ type: "RESET_FILTERS" })}>Clear All Filters</Button>
                         </div>
                     )}
                 </div>
